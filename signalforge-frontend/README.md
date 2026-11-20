@@ -39,3 +39,10 @@ The Express backend must allow browser CORS requests from your Vercel domain. Th
 ## Important
 
 `VITE_API_BASE_URL` is public frontend configuration, not a secret. Never put Databricks tokens, database passwords, or other backend secrets in a `VITE_` variable.
+
+
+## API connection
+
+The frontend defaults to the deployed backend at `https://product-review-databricks.onrender.com`. It can be overridden in Vercel with the environment variable `VITE_API_BASE_URL` (use the base URL only; do not append `/api`).
+
+The backend endpoints used by this frontend are `GET /api/health`, `GET /api/products`, `GET /api/products/:productId`, and `PUT /api/products/:productId/flag`.

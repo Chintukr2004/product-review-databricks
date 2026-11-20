@@ -11,7 +11,8 @@ export type ProductDetail = Product & {
   sentimentBreakdown: { sentiment: string; count: number }[];
 };
 
-const base = (import.meta.env.VITE_API_BASE_URL || '').trim().replace(/\/+$/, '');
+// Use the deployed Render API by default. Vercel can override this with VITE_API_BASE_URL.
+const base = (import.meta.env.VITE_API_BASE_URL || 'https://product-review-databricks.onrender.com').trim().replace(/\/+$/, '');
 export function apiUrl(path: string) { return `${base}${path.startsWith('/') ? path : `/${path}`}`; }
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   let response: Response;
