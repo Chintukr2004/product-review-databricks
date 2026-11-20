@@ -1,3 +1,7 @@
+const API_BASE_URL = (
+  import.meta.env.VITE_API_BASE_URL || ""
+).replace(/\/$/, "");
+
 export type HealthStatus =
   | "healthy"
   | "needs_attention"
@@ -35,17 +39,27 @@ async function fetchJson<T>(url: string, init?: RequestInit): Promise<T> {
   return response.json() as Promise<T>;
 }
 
+
 export const api = {
-  products: () => fetchJson<{ products: ProductSummary[] }>("/api/products"),
+  products: () =>
+    fetchJson<{ products: ProductSummary[] }>(
+      `${API_BASE_URL}/api/products`
+    ),
+
   product: (productId: string) =>
-    fetchJson<ProductDetail>(`/api/products/${productId}`),
+    fetchJson<ProductDetail>(
+      `${API_BASE_URL}/api/products/${productId}`
+    ),
+
   setFlag: (productId: string, flagged: boolean) =>
     fetchJson<{ productId: string; flagged: boolean }>(
-      `/api/products/${productId}/flag`,
+      `${API_BASE_URL}/api/products/${productId}/flag`,
       {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({ flagged }),
-      },
+      }
     ),
 };
